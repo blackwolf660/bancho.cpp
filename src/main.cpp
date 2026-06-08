@@ -43,7 +43,7 @@ int main() {
         return bancho_handler(request);
     });
 
-    app.port(config.port).multithreaded().run();
+    app.bindaddr(config.host).port(config.port).multithreaded().run();
 
     return 0;
 }

@@ -13,7 +13,6 @@ struct Config {
     std::string host = "0.0.0.0";
     int session_timeout = 60;
     int reaper_interval = 10;
-    bool multithreaded = true;
     std::string log_level = "info";
 
     static Config load(const std::string& filename = "config.json") {
@@ -33,7 +32,6 @@ struct Config {
             if (j.contains("host")) config.host = j["host"];
             if (j.contains("session_timeout")) config.session_timeout = j["session_timeout"];
             if (j.contains("reaper_interval")) config.reaper_interval = j["reaper_interval"];
-            if (j.contains("multithreaded")) config.multithreaded = j["multithreaded"];
             if (j.contains("log_level")) config.log_level = j["log_level"];
 
             std::cout << "Config loaded from " << filename << std::endl;
@@ -51,7 +49,7 @@ struct Config {
         std::cout << "Port: " << port << std::endl;
         std::cout << "Session Timeout: " << session_timeout << "s" << std::endl;
         std::cout << "Reaper Interval: " << reaper_interval << "s" << std::endl;
-        std::cout << "Multithreaded: " << (multithreaded ? "yes" : "no") << std::endl;
+
         std::cout << "Log Level: " << log_level << std::endl;
         std::cout << "===========================\n" << std::endl;
     }
