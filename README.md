@@ -53,11 +53,12 @@ The server is ready to accept requests from osu! clients.
 ```
 bancho.cpp/
 ├── CMakeLists.txt          # Build configuration
+├── config.json             # Config file for bancho.cpp
 ├── README.md               # This file
 └── src/
     ├── main.cpp            # Entry point, server startup
     ├── cho.hpp             # Main Bancho request handler
-    ├──
+    ├── config.hpp          # Config handler
     ├── packets.hpp         # Protocol packet definitions (35+ types)
     └── player.hpp          # Player data structures and statuses
 ```
