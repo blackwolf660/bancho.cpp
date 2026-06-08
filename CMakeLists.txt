@@ -29,6 +29,12 @@ FetchContent_Declare(Crow
     EXCLUDE_FROM_ALL
     SYSTEM)
 FetchContent_MakeAvailable(Crow)
+
+FetchContent_Declare(json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.11.3
+    GIT_SHALLOW ON)
+FetchContent_MakeAvailable(json)
 # --- --- --- --- --- --- --- ---
 
 set(Exes
@@ -36,6 +42,7 @@ set(Exes
 )
 set(Libs
     Crow::Crow
+    nlohmann_json::nlohmann_json
 )
 
 add_executable(${PROJECT_NAME} ${Exes})

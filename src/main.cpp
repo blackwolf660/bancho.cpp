@@ -3,10 +3,11 @@
 #include <chrono>
 
 #include "cho.hpp"
+#include "config.hpp"
 
-void session_reaper() {
+void session_reaper(const Config& config) {
     while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(10));
+        std::this_thread::sleep_for(std::chrono::seconds(config.reaper_interval));
 
         auto now = std::chrono::steady_clock::now();
         std::vector<std::shared_ptr<Player>> to_disconnect;
@@ -15,7 +16,7 @@ void session_reaper() {
             auto last = p->last_recv_time.load();
             auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - last);
 
-            if (duration.count() > 60) {
+            if (duration.count() > config.session_timeout) {
                 to_disconnect.push_back(p);
             }
         }
@@ -28,7 +29,11 @@ void session_reaper() {
 }
 
 int main() {
-    std::thread(session_reaper).detach();
+    // Load configuration
+    Config config = Config::load();
+    config.print();
+    
+    std::thread(session_reaper, config).detach();
     
     crow::SimpleApp app;
 
@@ -38,7 +43,7 @@ int main() {
         return bancho_handler(request);
     });
 
-    app.port(18080).multithreaded().run();
+    app.port(config.port).multithreaded().run();
 
     return 0;
 }
